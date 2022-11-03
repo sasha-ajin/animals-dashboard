@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image');
             $table->string('color');
+            $table->integer('number')->unique();
             $table->timestamps();
         });
     }

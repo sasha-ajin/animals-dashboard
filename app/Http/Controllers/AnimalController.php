@@ -38,10 +38,17 @@ class AnimalController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($input, [
-            'name' => 'required', 'image' => 'required', 'color' => 'required'
+            'name' => 'required',
+            'image' => 'required',
+            'color' => 'required',
+            'number' => 'required|integer|min:1|max:9|unique:animals'
+
         ]);
         if ($validator->fails()) {
-            return $this->sendError('Validation Error', $validator->errors());
+            return response()->json([
+                'success' => false,
+                'error' => $validator->errors()
+            ]);
         }
         $animal = Animal::create($input);
         return response()->json([
