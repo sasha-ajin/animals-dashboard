@@ -66,7 +66,7 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
-        //
+        return Animal::find($id);
     }
 
     /**

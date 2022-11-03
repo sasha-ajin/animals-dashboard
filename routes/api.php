@@ -21,9 +21,8 @@ Route::get('/animals', function () {
     return AnimalResource::collection(Animal::all());
 });
 
-Route::get('/animal/{id}', function ($id) {
-    return AnimalResource::collection(Animal::findOrFail($id));
-});
+Route::get('/animal/{id}', [AnimalController::class, 'show']);
+
 
 Route::put('/animal/{id}', [AnimalController::class, 'update']);
 
