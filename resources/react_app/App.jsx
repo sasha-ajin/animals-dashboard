@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AnimalService from "./api/AnimalService";
+import Navbar from "./Navbar/Navbar";
+
 const App = () => {
     const [animals, setAnimals] = useState([]);
     const [modal, setModal] = useState(false);
@@ -30,6 +32,7 @@ const App = () => {
     }
     return (
         <div>
+            <Navbar />
             <button onClick={() => console.log(animals)}>get all</button>
             <button
                 onClick={async () => {
