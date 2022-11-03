@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
+use App\Http\Resources\AnimalResource;
+use App\Models\Animal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/animals', function () {
+    return AnimalResource::collection(Animal::all());
+});
+
+Route::get('/animals{id}', function ($id) {
+    return AnimalResource::collection(Animal::findOrFail($id));
+});
+
+Route::post('/animal', [AnimalController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
