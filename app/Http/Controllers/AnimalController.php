@@ -39,7 +39,7 @@ class AnimalController extends Controller
         $input = $request->all();
         $validator = Validator::make($input, [
             'name' => 'required',
-            'image' => 'required',
+            'link' => 'required',
             'color' => 'required',
             'number' => 'required|integer|min:1|max:9|unique:animals'
 
@@ -92,7 +92,7 @@ class AnimalController extends Controller
         if (Animal::where('id', $id)->exists()) {
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'image' => 'required',
+                'link' => 'required',
                 'color' => 'required',
                 'number' => 'required|integer|min:1|max:9|unique:animals'
 
@@ -107,7 +107,7 @@ class AnimalController extends Controller
             $animal->number = $request->number;
             $animal->color = $request->color;
             $animal->name = $request->name;
-            $animal->image = $request->image;
+            $animal->link = $request->link;
             $animal->save();
             return response()->json([
                 'success' => true,

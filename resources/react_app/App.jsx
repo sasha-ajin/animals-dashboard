@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AnimalService from "./api/AnimalService";
+import GridAnimals from "./GridAnimals/GridAnimals";
 import Navbar from "./Navbar/Navbar";
 
 const App = () => {
@@ -33,20 +34,23 @@ const App = () => {
     return (
         <div>
             <Navbar />
-            <button onClick={() => console.log(animals)}>get all</button>
-            <button
-                onClick={async () => {
-                    const res = await createAnimal({
-                        name: "lon",
-                        image: "f",
-                        color: "2",
-                        number: 5,
-                    });
-                    console.log(res);
-                }}
-            >
-                create
-            </button>
+            <GridAnimals animals={animals} />
+            <div>
+                <button onClick={() => console.log(animals)}>get all</button>
+                <button
+                    onClick={async () => {
+                        const res = await createAnimal({
+                            name: "lon",
+                            link: "f",
+                            color: "2",
+                            number: 5,
+                        });
+                        console.log(res);
+                    }}
+                >
+                    create
+                </button>
+            </div>
         </div>
     );
 };

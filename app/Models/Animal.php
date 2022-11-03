@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Animal extends Model
 {
-    protected $fillable = ['name', 'image', 'color', 'number'];
+    protected $fillable = ['name', 'link', 'color', 'number' ];
     protected $table = 'animals';
     use HasFactory;
 }

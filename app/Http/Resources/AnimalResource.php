@@ -18,7 +18,7 @@ class AnimalResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'color' => $this->color,
-            'image' => $this->image,
+            'link' => $this->link,
             'number' => $this->number,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
