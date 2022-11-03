@@ -21,11 +21,15 @@ Route::get('/animals', function () {
     return AnimalResource::collection(Animal::all());
 });
 
-Route::get('/animals{id}', function ($id) {
+Route::get('/animal/{id}', function ($id) {
     return AnimalResource::collection(Animal::findOrFail($id));
 });
 
+Route::put('/animal/{id}', [AnimalController::class, 'update']);
+
 Route::post('/animal', [AnimalController::class, 'store']);
+
+Route::delete('/animal/{id}', [AnimalController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

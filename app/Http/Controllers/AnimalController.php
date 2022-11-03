@@ -89,7 +89,36 @@ class AnimalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (Animal::where('id', $id)->exists()) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'image' => 'required',
+                'color' => 'required',
+                'number' => 'required|integer|min:1|max:9|unique:animals'
+
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'error' => $validator->errors()
+                ]);
+            }
+            $animal = Animal::find($id);
+            $animal->number = $request->number;
+            $animal->color = $request->color;
+            $animal->name = $request->name;
+            $animal->image = $request->image;
+            return response()->json([
+                'success' => true,
+                'message' => 'Animal updated successfully',
+                'animal' => $animal
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Animal was not found',
+            ]);
+        }
     }
 
     /**
@@ -100,6 +129,18 @@ class AnimalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Animal::where('id', $id)->exists()) {
+            $animal = Animal::find($id);
+            $animal->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Animal deleted successfully',
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Animal was not found',
+            ]);
+        }
     }
 }
