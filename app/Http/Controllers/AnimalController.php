@@ -108,6 +108,7 @@ class AnimalController extends Controller
             $animal->color = $request->color;
             $animal->name = $request->name;
             $animal->image = $request->image;
+            $animal->save();
             return response()->json([
                 'success' => true,
                 'message' => 'Animal updated successfully',
