@@ -25,8 +25,9 @@ const App = () => {
         return response;
     };
     const deleteAnimal = async (id) => {
-        await Animalservice.delete(id);
+        await AnimalService.delete(id);
         setAnimals(animals.filter((a) => a.id !== id));
+        closeUpdateModal();
     };
     const createAnimal = async (newAnimal) => {
         const response = await AnimalService.create(newAnimal);
@@ -60,6 +61,7 @@ const App = () => {
             >
                 <>
                     <UpdateModalContainer
+                        deleteAnimal={deleteAnimal}
                         updateAnimal={updateAnimal}
                         animal={updateModal.animal}
                     />

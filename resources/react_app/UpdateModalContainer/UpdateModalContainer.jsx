@@ -23,9 +23,8 @@ const style = {
     p: 4,
 };
 
-const UpdateModalContainer = ({ animal, updateAnimal }) => {
+const UpdateModalContainer = ({ animal, updateAnimal, deleteAnimal }) => {
     const [animalBody, setAnimalBody] = useState(animal);
-    const [color, setColor] = useState(animal.color);
     const handleChangeColorPiker = (color) => {
         setAnimalBody({ ...animalBody, color: color });
     };
@@ -68,13 +67,18 @@ const UpdateModalContainer = ({ animal, updateAnimal }) => {
                 >
                     Update
                 </StyledHalfButton>
-                <StyledHalfButton variant="outlined" color="error">
+                <StyledHalfButton
+                    variant="outlined"
+                    color="error"
+                    onClick={() => deleteAnimal(animal.id)}
+                >
                     Delete
                 </StyledHalfButton>
                 <StyledGoButton
                     variant="contained"
                     color="success"
                     size="large"
+                    onClick={() => (window.location.href = animal.link)}
                 >
                     Go
                 </StyledGoButton>
@@ -85,6 +89,7 @@ const UpdateModalContainer = ({ animal, updateAnimal }) => {
 };
 
 UpdateModalContainer.propTypes = {
+    deleteAnimal: PropTypes.func.isRequired,
     updateAnimal: PropTypes.func.isRequired,
     animal: PropTypes.shape({
         id: PropTypes.number.isRequired,
