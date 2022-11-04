@@ -7,14 +7,14 @@ import UpdateModalContainer from "./UpdateModalContainer/UpdateModalContainer";
 
 const App = () => {
     const [animals, setAnimals] = useState([]);
-    const modalInitialState = { open: false, id: 0 };
+    const modalInitialState = { open: false, animal: null };
     const [updateModal, setUpdateModal] = useState(modalInitialState);
     const [createModal, setCreateModal] = useState(modalInitialState);
     const closeUpdateModal = () => {
         setUpdateModal(modalInitialState);
     };
-    const openUpdateModal = (id) => {
-        setUpdateModal({ open: true, id: id });
+    const openUpdateModal = (animal) => {
+        setUpdateModal({ open: true, animal: animal });
     };
     const fetchAnimals = async () => {
         const response = await AnimalService.getAll();
@@ -33,14 +33,17 @@ const App = () => {
         setAnimals([...animals, response.animal]);
         return response;
     };
-    const updateAnimal = async (newAnimal, id) => {
-        await AnimalService.update(newAnimal, id);
-        newAnimal.id = id;
+    const updateAnimal = async (newAnimal) => {
+        const response = await AnimalService.update(newAnimal, newAnimal.id);
+        if (!response.success) {
+            alert("Somethin wents wrong");
+        }
         setAnimals(
             animals.map((a) => {
-                return a.id === id ? { ...newAnimal } : a;
+                return a.id === newAnimal.id ? { ...newAnimal } : a;
             })
         );
+        closeUpdateModal();
     };
     useEffect(() => {
         fetchAnimals();
@@ -48,14 +51,19 @@ const App = () => {
     return (
         <div>
             <Navbar />
-            <GridAnimals animals={animals} openUpdateModal={openUpdateModal}/>
+            <GridAnimals animals={animals} openUpdateModal={openUpdateModal} />
             <Modal
                 open={updateModal.open}
                 onClose={closeUpdateModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <UpdateModalContainer id={updateModal.id} />
+                <>
+                    <UpdateModalContainer
+                        updateAnimal={updateAnimal}
+                        animal={updateModal.animal}
+                    />
+                </>
             </Modal>
         </div>
     );

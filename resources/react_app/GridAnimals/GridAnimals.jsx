@@ -23,7 +23,7 @@ const GridAnimals = ({ animals, openUpdateModal }) => {
                     color="primary"
                     sx={{ height: 160 }}
                     key={animal.id}
-                    onClick={() => openUpdateModal(animal.id)}
+                    onClick={() => openUpdateModal(animal)}
                 />
             );
         } else {

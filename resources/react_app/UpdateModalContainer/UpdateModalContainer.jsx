@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
+import {
+    StyledTextField,
+    StyledHalfButton,
+    StyledGoButton,
+    ButtonsContainer,
+    ColorPicker,
+} from "./styles";
+import Typography from "@mui/material/Typography";
+import { MuiColorInput } from "mui-color-input";
 
 const style = {
     position: "absolute",
@@ -14,16 +23,78 @@ const style = {
     p: 4,
 };
 
-const UpdateModalContainer = ({ id }) => {
+const UpdateModalContainer = ({ animal, updateAnimal }) => {
+    const [animalBody, setAnimalBody] = useState(animal);
+    const [color, setColor] = useState(animal.color);
+    const handleChangeColorPiker = (color) => {
+        setAnimalBody({ ...animalBody, color: color });
+    };
     return (
         <Box sx={style}>
-            <div>update {id}</div>{" "}
+            <Typography variant="h2">{animal.name}</Typography>
+            <StyledTextField
+                fullWidth
+                label="name"
+                id="fullWidth"
+                defaultValue={animal.name}
+                onChange={(e) =>
+                    setAnimalBody({ ...animalBody, name: e.target.value })
+                }
+            />
+            <StyledTextField
+                fullWidth
+                label="link"
+                id="fullWidth"
+                defaultValue={animal.link}
+                onChange={(e) =>
+                    setAnimalBody({ ...animalBody, link: e.target.value })
+                }
+            />
+            <ColorPicker
+                value={animalBody.color}
+                onChange={handleChangeColorPiker}
+            />
+            <ButtonsContainer>
+                <StyledHalfButton
+                    variant="contained"
+                    onClick={() => updateAnimal(animalBody)}
+                    disabled={
+                        animalBody.name.length !== 0 &&
+                        animalBody.link.length !== 0 &&
+                        animalBody.color.length !== 0
+                            ? false
+                            : true
+                    }
+                >
+                    Update
+                </StyledHalfButton>
+                <StyledHalfButton variant="outlined" color="error">
+                    Delete
+                </StyledHalfButton>
+                <StyledGoButton
+                    variant="contained"
+                    color="success"
+                    size="large"
+                >
+                    Go
+                </StyledGoButton>
+                <button onClick={() => console.log(animalBody)}></button>
+            </ButtonsContainer>
         </Box>
     );
 };
 
 UpdateModalContainer.propTypes = {
-    id: PropTypes.number.isRequired,
+    updateAnimal: PropTypes.func.isRequired,
+    animal: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+        link: PropTypes.string.isRequired,
+        number: PropTypes.number.isRequired,
+        created_at: PropTypes.string.isRequired,
+        updated_at: PropTypes.string.isRequired,
+    }),
 };
 
 export default UpdateModalContainer;

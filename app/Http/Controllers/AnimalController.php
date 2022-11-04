@@ -94,8 +94,6 @@ class AnimalController extends Controller
                 'name' => 'required',
                 'link' => 'required',
                 'color' => 'required',
-                'number' => 'required|integer|min:1|max:9|unique:animals'
-
             ]);
             if ($validator->fails()) {
                 return response()->json([
@@ -104,7 +102,12 @@ class AnimalController extends Controller
                 ]);
             }
             $animal = Animal::find($id);
-            $animal->number = $request->number;
+            if ($animal->number !=  $request->number) {
+                return response()->json([
+                    'success' => false,
+                    'error' => "you cannot change the number"
+                ]);
+            }
             $animal->color = $request->color;
             $animal->name = $request->name;
             $animal->link = $request->link;
