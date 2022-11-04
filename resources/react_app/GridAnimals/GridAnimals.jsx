@@ -2,31 +2,52 @@ import React from "react";
 import {
     Container,
     GridContainer,
-    AnimalBox,
     Grid,
     StyledCheckedIcon,
-    StyledAddCircleIcon
+    StyledAddCircleIcon,
 } from "./styles";
 import PropTypes from "prop-types";
 
-const GridAnimals = ({ animals }) => {
+const GridAnimals = ({ animals, openUpdateModal }) => {
+    const getAnimalByNumber = (number) => {
+        const animal = animals.find((animal) => animal.number == number);
+        return animal;
+    };
+    let animalsBoxes = [];
+    let circleKey = "0";
+    for (let i = 0; i < 9; ++i) {
+        const animal = getAnimalByNumber(i + 1);
+        if (animal !== undefined) {
+            animalsBoxes.push(
+                <StyledCheckedIcon
+                    color="primary"
+                    sx={{ height: 160 }}
+                    key={animal.id}
+                    onClick={() => openUpdateModal(animal.id)}
+                />
+            );
+        } else {
+            animalsBoxes.push(
+                <StyledAddCircleIcon
+                    color="primary"
+                    key={circleKey}
+                    sx={{ height: 160 }}
+                />
+            );
+            circleKey += " ";
+        }
+    }
     return (
         <Container>
             <GridContainer>
-                <Grid>
-                    {[...Array(9)].map((e, i) => (
-                        <StyledCheckedIcon
-                            color="primary"
-                            sx={{ fontSize: 160 }}
-                        />
-                    ))}
-                </Grid>
+                <Grid>{animalsBoxes}</Grid>
             </GridContainer>
         </Container>
     );
 };
 
 GridAnimals.propTypes = {
+    openUpdateModal: PropTypes.func,
     animals: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.number.isRequired,

@@ -26,14 +26,6 @@ export const Grid = styled.div`
     }
 `;
 
-export const AnimalBox = styled.div`
-    margin: 5px;
-    flex: 1 1 30%;
-    @media (max-width: 768px) {
-        width: 100%;
-    }
-`;
-
 export const StyledCheckedIcon = styled(CheckBoxOutlinedIcon)`
     margin: 5px;
     flex: 1 1 30%;

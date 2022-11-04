@@ -5,6 +5,10 @@ export default class AnimalService {
         const response = await axios.get(`animals`);
         return response.data.data;
     }
+    static async getOne(id) {
+        const response = await axios.get(`animal/${id}`);
+        return response.data;
+    }
     static async delete(id) {
         const response = await axios
             .delete(`animal/${id}`)
