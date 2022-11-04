@@ -20,7 +20,6 @@ export const Grid = styled.div`
     flex-wrap: wrap;
     @media (max-width: 768px) {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
@@ -29,19 +28,9 @@ export const Grid = styled.div`
 export const StyledCheckedIcon = styled(CheckBoxOutlinedIcon)`
     margin: 5px;
     flex: 1 1 30%;
-    width: 100% @media (max-width: 768px) {
-        width: 100%;
-    }
-    path {
-        width: 60px;
-        height: 60px;
-    }
 `;
 
 export const StyledAddCircleIcon = styled(AddCircleRoundedIcon)`
     margin: 5px;
     flex: 1 1 30%;
-    @media (max-width: 768px) {
-        width: 100%;
-    }
 `;
