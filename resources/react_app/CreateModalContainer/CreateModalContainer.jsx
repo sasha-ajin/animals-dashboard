@@ -3,9 +3,8 @@ import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
 import {
     StyledTextField,
-    StyledHalfButton,
-    StyledGoButton,
-    ButtonsContainer,
+    StyledCreateButton,
+    ButtonContainer,
     ColorPicker,
 } from "./styles";
 import Typography from "@mui/material/Typography";
@@ -22,19 +21,23 @@ const style = {
     p: 4,
 };
 
-const UpdateModalContainer = ({ animal, updateAnimal, deleteAnimal }) => {
-    const [animalBody, setAnimalBody] = useState(animal);
+const CreateModalContainer = ({ number, createAnimal }) => {
+    const [animalBody, setAnimalBody] = useState({
+        name: "",
+        color: "rgb(255, 255, 255)",
+        link: "",
+        number: number,
+    });
     const handleChangeColorPiker = (color) => {
         setAnimalBody({ ...animalBody, color: color });
     };
     return (
         <Box sx={style}>
-            <Typography variant="h2">{animal.name}</Typography>
+            <Typography variant="h3">Create the Animal</Typography>
             <StyledTextField
                 fullWidth
                 label="name"
                 id="fullWidth"
-                defaultValue={animal.name}
                 onChange={(e) =>
                     setAnimalBody({ ...animalBody, name: e.target.value })
                 }
@@ -43,7 +46,6 @@ const UpdateModalContainer = ({ animal, updateAnimal, deleteAnimal }) => {
                 fullWidth
                 label="link"
                 id="fullWidth"
-                defaultValue={animal.link}
                 onChange={(e) =>
                     setAnimalBody({ ...animalBody, link: e.target.value })
                 }
@@ -52,10 +54,11 @@ const UpdateModalContainer = ({ animal, updateAnimal, deleteAnimal }) => {
                 value={animalBody.color}
                 onChange={handleChangeColorPiker}
             />
-            <ButtonsContainer>
-                <StyledHalfButton
+            <ButtonContainer>
+                <StyledCreateButton
                     variant="contained"
-                    onClick={() => updateAnimal(animalBody)}
+                    size="large"
+                    onClick={() => createAnimal(animalBody)}
                     disabled={
                         animalBody.name.length !== 0 &&
                         animalBody.link.length !== 0 &&
@@ -64,40 +67,15 @@ const UpdateModalContainer = ({ animal, updateAnimal, deleteAnimal }) => {
                             : true
                     }
                 >
-                    Update
-                </StyledHalfButton>
-                <StyledHalfButton
-                    variant="outlined"
-                    color="error"
-                    onClick={() => deleteAnimal(animal.id)}
-                >
-                    Delete
-                </StyledHalfButton>
-                <StyledGoButton
-                    variant="contained"
-                    color="success"
-                    size="large"
-                    onClick={() => (window.location.href = animal.link)}
-                >
-                    Go
-                </StyledGoButton>
-            </ButtonsContainer>
+                    Create
+                </StyledCreateButton>
+            </ButtonContainer>
         </Box>
     );
 };
-
-UpdateModalContainer.propTypes = {
-    deleteAnimal: PropTypes.func.isRequired,
-    updateAnimal: PropTypes.func.isRequired,
-    animal: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired,
-        link: PropTypes.string.isRequired,
-        number: PropTypes.number.isRequired,
-        created_at: PropTypes.string.isRequired,
-        updated_at: PropTypes.string.isRequired,
-    }),
+CreateModalContainer.propTypes = {
+    number: PropTypes.number.isRequired,
+    createAnimal: PropTypes.func.isRequired,
 };
 
-export default UpdateModalContainer;
+export default CreateModalContainer;

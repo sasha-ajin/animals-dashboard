@@ -8,15 +8,15 @@ import {
 } from "./styles";
 import PropTypes from "prop-types";
 
-const GridAnimals = ({ animals, openUpdateModal }) => {
+const GridAnimals = ({ animals, openUpdateModal, openCreateModal }) => {
     const getAnimalByNumber = (number) => {
         const animal = animals.find((animal) => animal.number == number);
         return animal;
     };
     let animalsBoxes = [];
     let circleKey = "0";
-    for (let i = 0; i < 9; ++i) {
-        const animal = getAnimalByNumber(i + 1);
+    for (let i = 1; i < 10; ++i) {
+        const animal = getAnimalByNumber(i);
         if (animal !== undefined) {
             animalsBoxes.push(
                 <StyledCheckedIcon
@@ -32,6 +32,7 @@ const GridAnimals = ({ animals, openUpdateModal }) => {
                     color="primary"
                     key={circleKey}
                     sx={{ height: 160 }}
+                    onClick={() => openCreateModal(i)}
                 />
             );
             circleKey += " ";
@@ -47,6 +48,7 @@ const GridAnimals = ({ animals, openUpdateModal }) => {
 };
 
 GridAnimals.propTypes = {
+    openCreateModal: PropTypes.func,
     openUpdateModal: PropTypes.func,
     animals: PropTypes.arrayOf(
         PropTypes.shape({
