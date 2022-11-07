@@ -24,7 +24,7 @@ const style = {
 const CreateModalContainer = ({ number, createAnimal }) => {
     const [animalBody, setAnimalBody] = useState({
         name: "",
-        color: "rgb(255, 255, 255)",
+        color: "rgb(26, 118, 210)",
         link: "",
         number: number,
     });
