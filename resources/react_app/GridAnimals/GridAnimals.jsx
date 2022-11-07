@@ -21,7 +21,10 @@ const GridAnimals = ({ animals, openUpdateModal, openCreateModal }) => {
             animalsBoxes.push(
                 <StyledCheckedIcon
                     color="primary"
-                    sx={{ height: 160 }}
+                    sx={{
+                        height: 160,
+                        color: animal.color,
+                    }}
                     key={animal.id}
                     onClick={() => openUpdateModal(animal)}
                 />
