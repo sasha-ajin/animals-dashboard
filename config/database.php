@@ -2,6 +2,18 @@
 
 use Illuminate\Support\Str;
 
+$production_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+$production_host = $production_url["host"] ?? null;
+$production_username = $production_url["user"] ?? null;
+$production_password = $production_url["pass"] ?? null;
+$production_database = substr($production_url["path"], 1);
+
+$APP_ENV = env('APP_ENV');
+if ($APP_ENV == 'local') {
+    $default_db = 'mysql';
+} else {
+    $default_db = 'production';
+}
 return [
 
     /*
@@ -15,7 +27,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', $default_db),
 
     /*
     |--------------------------------------------------------------------------
@@ -61,6 +73,16 @@ return [
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
+        ],
+        'production' => [
+            'driver' => 'mysql',
+            'host' => $production_host,
+            'database' => $production_database,
+            'username' => $production_username,
+            'password' => $production_password,
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
         ],
 
         'pgsql' => [
@@ -125,7 +147,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

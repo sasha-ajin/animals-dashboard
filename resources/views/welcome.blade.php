@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app" data-api={{ $api }}></div>
 </body>
 
 </html>
